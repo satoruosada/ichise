@@ -1,0 +1,79 @@
+
+
+.btn {
+ 
+  &.filled {
+    width: 170px;
+    height: 80px;
+    background-color: #2D5A6E;
+    text-align: center;
+    color: #ffffff;
+    font-size: 10px;
+  }
+
+  &__ichiran {
+     font-size: 14px;
+     width: 200px;
+     color: #ffffff;
+     border: 1px solid #ffffff;
+     padding: 10px 50px;
+     position: relative;
+
+     &:hover {
+       text-decoration: none;
+       color: white;
+     }
+
+     &-second {
+      font-size: 14px;
+      width: 200px;
+      color: #2D5A6E;
+      border: 1px solid #2D5A6E;
+      padding: 10px 50px;
+      position: relative;
+     }
+
+
+     &-res {
+      font-size: 14px;
+      width: 200px;
+      color: #2D5A6E;
+      border: 1px solid #2D5A6E;
+      padding: 7px 50px;
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      transform: translate(-50%, -10%);
+
+      &:hover {
+        text-decoration: none;
+        color: #2D5A6E;
+      }
+
+     }
+  }
+  &__detail {
+     font-size: 14px;
+     width: 200px;
+     color: #ffffff;
+     border: 1px solid #ffffff;
+     background-color: #64645a;
+     opacity: 0.6;
+     padding: 8px 50px;
+     position: relative;
+     top: 17px;
+
+     &::after {
+         content: '';
+         position: absolute;
+         top: 50%;
+         right: 0;
+     }
+  }
+
+  &-yajirushi {
+      position: relative;
+      top: -4px;
+      left: 20px;
+  }
+}
