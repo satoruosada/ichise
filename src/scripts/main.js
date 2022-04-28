@@ -1,189 +1,145 @@
+document.addEventListener('DOMContentLoaded', function () {
+    const main = new Main();
+});
 
-document.addEventListener('DOMContentLoaded' , function(){
-    const cb = function (el, inview) {
-      if(inview) {
-        const ta = new TweenTextAnimation(el);
-        ta.animate();
-      }
-  }
-  
-  const so = new ScrollObserver('.tween-animate-title', cb);
-  
-  
-  const _inviewAnimation = function(el, inview){
-    if(inview){
-      el.classList.add('inview');
-    }else{
-      el.classList.remove('inview');
+class Main {
+    constructor() {
+        this.header = document.querySelector('.header ,.header-sec');
+        // this.header = document.querySelector('.header-sec');
+        this.sides = document.querySelectorAll('.side');
+        this._observers = [];
+        this._init();
     }
-  }
-  const so2 = new ScrollObserver('.appear', _inviewAnimation);
-  
-  
-  const header = document.querySelector('.header');
-  
-  const _navAnimation = function(el, inview){
-    if(inview) {
-      header.classList.remove('triggered');
-  } else {
-      header.classList.add('triggered');
-  }
-  }
-  
-  const so3 = new ScrollObserver('.nav-trigger', _navAnimation, {once: false});
-  
-  new MobileMenu();
-  });
-  
+
+    set observers(val) {
+        this._observers.push(val);
+    }
+
+    get observers() {
+        return this._observers;
+    }
+
+    _init() {
+        new MobileMenu();
+        Pace.on('done', this._paceDone.bind(this));
+    }
+
+    _paceDone() {
+        this._scrollInit();
+    }
+
+    _inviewAnimation(el, inview) {
+        if (inview) {
+            el.classList.add('inview');
+        } else {
+            el.classList.remove('inview');
+        }
+    }
+
+    _navAnimation(el, inview) {
+        if (inview) {
+            this.header.classList.remove('triggered');
+        } else {
+            this.header.classList.add('triggered');
+        }
+    }
+
+    _destroyObservers() {
+        this.observers.forEach(ob => {
+            ob.destroy();
+        });
+    }
+
+    destroy() {
+        this._destroyObservers();
+    }
+
+    _scrollInit() {
+        this.observers = new ScrollObserver('.nav-trigger', this._navAnimation.bind(this), { once: false });
+        this.observers = new ScrollObserver('.cover-slide', this._inviewAnimation);
+        this.observers = new ScrollObserver('.js-appear', this._inviewAnimation);
+    }
+}
 
 
+// スクロール
+var pagetopBtn = jQuery(".footer__scroll-a");
+pagetopBtn.hide();
 
-//パララックスios対応
-$(function () {
-    const ua = navigator.userAgent.toLowerCase();
-    // alert(ua);
-    if (ua.indexOf('iphone') > -1 || (ua.indexOf('android') > -1 && ua.indexOf('mobile') > -1)) {
-        // スマートフォン
-        // alert('スマートフォン');
-        $('body').addClass('is-ios');
-  
-    } else if (ua.indexOf('ipad') > -1 || ua.indexOf('macintosh') > -1 && 'ontouchend' in document) {
-        // タブレット
-        // alert('タブレット');
-        $('body').addClass('is-ios');
+jQuery(window).scroll(function () {
+    if (jQuery(this).scrollTop() > 400) {
+        pagetopBtn.fadeIn();
     } else {
-        // PC
-        // alert('PC');
-        $('body').removeClass('is-ios');
+        pagetopBtn.fadeOut();
     }
-})
+});
 
-
-// メイン画像スライド
-$(document).on('ready', function () {
-  $(".full-screen_one").slick({
-    centerMode: true,
-    centerPadding: '5%',
-    dots: true,
-    autoplay: false,
-    autoplaySpeed: 10000,
-    speed: 1000,
-    infinite: true
-  });
-  $(".full-screen_one").on("afterChange", function (event, slick, currentSlide, nextSlide) {
-    switch (currentSlide) {
-      case 0:
-        // 1枚目のスライド
-        $(this).slick("slickSetOption", "autoplaySpeed", 10000);
-        break;
-
-      default:
-        // その他のスライド
-        $(this).slick("slickSetOption", "autoplaySpeed", 3500);
-        break;
+jQuery(window).scroll(function () {
+    var height = jQuery(document).height();
+    var position = jQuery(window).height() + jQuery(window).scrollTop();
+    var footer = jQuery(".footer").outerHeight();
+    if (height - position < footer) {
+        pagetopBtn.css({
+            bottom: 250,
+        });
+    } else {
+        pagetopBtn.css({
+            position: "fixed",
+            bottom: 10,
+        });
     }
-  });
+});
+
+var pagetopBtn02 = jQuery(".footer__scroll-a-sp");
+pagetopBtn02.hide();
+
+jQuery(window).scroll(function () {
+    if (jQuery(this).scrollTop() > 400) {
+        pagetopBtn02.fadeIn();
+    } else {
+        pagetopBtn02.fadeOut();
+    }
+});
+
+jQuery(window).scroll(function () {
+    var height02 = jQuery(document).height();
+    var position02 = jQuery(window).height() + jQuery(window).scrollTop();
+    var footer02 = jQuery(".footer__nav").outerHeight();
+    if (height02 - position02 < footer02) {
+        pagetopBtn02.css({
+            bottom: 480,
+        });
+    } else {
+        pagetopBtn02.css({
+            position: "fixed",
+            bottom: 100,
+        });
+    }
 });
 
 
-// トップへのボタン
-jQuery(function($){
 
-  var sideBar = $('.footer__scroll');
-  sideBar.hide();
-  
-  $(window).scroll(function () {
-      if ($(this).scrollTop() > 100) {
-        sideBar.fadeIn();
-      } else {
-        sideBar.fadeOut();
-      }
-  });
-});
-// トップへのボタン
-jQuery(function($){
 
-  var sideBar = $('.footer__scroll-02');
-  sideBar.hide();
-  
-  $(window).scroll(function () {
-      if ($(this).scrollTop() > 100) {
-        sideBar.fadeIn();
-      } else {
-        sideBar.fadeOut();
-      }
-  });
-});
 
-// レスポンシブ用トップへのボタン
-var pagetopBtn = $('.footer__scroll-res,.footer__scroll-02-res');
-    pagetopBtn.hide();
- 
-    $(window).scroll(function () {
-        if ($(this).scrollTop() > 100) {
-            pagetopBtn.fadeIn();
-        } else {
-            pagetopBtn.fadeOut();
-        }
-    });
- 
-    $(window).scroll(function () {
-        var height = $(document).height();
-        var position = $(window).height() + $(window).scrollTop();
-        var footer = $("footer").outerHeight();
-        if ( height - position  < footer) {
-            pagetopBtn.css({
-                bottom : 180
-            });
-        } else {
-            pagetopBtn.css({
-                position : "fixed",
-                bottom: 30
-            });
-        }
-    });
-
-    pagetopBtn.click(function () {
-        $('body,html').animate({
-            scrollTop: 0
-        }, 500);
+// aタグスクロール
+jQuery(function () {
+    jQuery('a[href^="#"]').click(function () {
+        let speed = 500;
+        let href = jQuery(this).attr("href");
+        let target = jQuery(href == "#" || href == "" ? "html" : href);
+        let position = target.offset().top;
+        jQuery("html, body").animate({ scrollTop: position }, speed, "swing");
         return false;
     });
-
-
-// アコーディオンメニュー
-jQuery(function(){
-  //.accordion_oneの中の.accordion_headerがクリックされたら
-  jQuery('.accordion_header').click(function(){
-    //クリックされた.accordion_oneの中の.accordion_headerに隣接する.accordion_innerが開いたり閉じたりする。
-    jQuery(this).next('.accordion_inner').slideToggle();
-    jQuery(this).toggleClass("open");
-    
-  });
-  //閉じるボタンがクリックされたら
-  jQuery('.s_05 a.close_btn').click(function () {
-    //クリックされたa.close_btnの親要素の.accordion_oneの.accordion_innerを閉じる。
-    jQuery(this).parents('.accordion_inner').slideUp();
-    jQuery('.accordion_header').removeClass("open");
-  });
 });
 
-// ページ内リンク
-jQuery(function(){
-  // 閉じるボタンをクリックした場合に処理
-  jQuery('.s_05 a.close_btn').click(function() {
-    // 移動先を0px上にずらす
-    var adjust = 200;
-    // スクロールの速度
-    var speed = 500; // ミリ秒
-    // アンカーの値取得
-    var href= jQuery(this).attr("href");
-    // 移動先を取得
-    var target = jQuery(href == "#" || href == "" ? 'html' : href);
-    // 移動先を調整
-    var position = target.offset().top - adjust;
-    // スムーススクロール
-    jQuery('body,html').animate({scrollTop:position}, speed, 'swing');
-    return false;
-  });
+ScrollReveal().reveal('.panel__left', {
+    duration: 2000, // アニメーションの完了にかかる時間
+    viewFactor: 0.5, // 0~1,どれくらい見えたら実行するか
+    reset: false   // 何回もアニメーション表示するか
+});
+ScrollReveal().reveal('.panel__right', {
+    duration: 2000, // アニメーションの完了にかかる時間
+    viewFactor: 0.5, // 0~1,どれくらい見えたら実行するか
+    reset: false   // 何回もアニメーション表示するか
 });

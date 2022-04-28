@@ -1,113 +1,36 @@
-@media (max-width:600px) {
-    .section {
-
-        &__enttl {
-            &-category {
-                margin-left: 15px;
-                font-size: 15px;
-               
-            }
-        }
-    }
-    .hero {
-        &__image {
-            &-left {
-                &::after {
-                    padding-top: 95%;
-                }
-            }
-            &-right {
-                &::after {
-                    padding-top: 95%;
-                }
-            }
-        }
-    }
-    .icon {
-        width: 90%;
-        
-    }
-    .toggleButton-top-left {
-        font-size: 23px;
-        width: 80%;
-    }
-    .toggleButton-under-left {
-        font-size: 23px;
-        width: 80%;
+@media screen and (max-width: 600px) {
+    .header {
+        height: 70px;
     }
 
-    .toggleButton-top {
-        font-size: 23px;
-        width: 80%;
+    .header-sec {
+        height: 70px;
     }
-    .toggleButton-under {
-        font-size: 23px;
-        width: 80%;
+    .logo-top {
+        height: 70px;
     }
 
     .top {
-        &__des02 {
-            text-align: center;
-            margin-left: 0;
-
-            & > span {
-                margin-right: 3px;
-            }
-            &-home {
-                margin-right: 3px;
-            }
-            &-ichiran {
-                margin-right: 3px;
-            }
-        }
+        padding-top: 70px;
+        background-size: 200% auto;
     }
-    .main-detaile {
-        &__title {
-            &-wrapper {
-                text-align: left;
-            }
-        }
-        &__images {
-            &-wrapper {
-                flex-direction: column;
-            }
-        }
-        &__images01 {
-            width: 100%;
-            margin-bottom: 20px;
-        }
-        &__images02 {
-            width: 100%;
-        }
+    .hero {
+        padding-top: 70px;
     }
 
-    .accordion {
-        &__title {
-            width: 60%;
+    .in {
+        &__panel {
+            &-img {
+                & img {
+                    object-fit: cover;
+                }
+            }
         }
     }
-    .accordion_title-wrapper {
-        width: 300px;
+    .top-ttl-en {
+        margin-bottom: 50px;
     }
-    .box_one-image01 {
-        & > img {
-            height: auto;
-        }
+    .pager {
+        padding: 40px 0 20px 0;
     }
-    .box_one-image02 {
-        & > img {
-            height: auto;
-        }
-    }
-}
-
-@media screen and (max-width:660px) {
-     .main {
-         &__images {
-             width: 40%;
-         }
-         &__txt {
-             width: 90%;
-         }
-     }
 }
